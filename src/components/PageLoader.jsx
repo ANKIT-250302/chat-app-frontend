@@ -3,7 +3,7 @@ import React from 'react'
 
 const PageLoader = () => {
   return (
-    <div className='min-h-screen flex items-center justify-center' data-theme="night"> 
+    <div className='min-h-screen flex items-center justify-center' data-theme="forest"> 
       <LoaderIcon className='animate-spin size-10 text-primary'/>
     </div>
   )

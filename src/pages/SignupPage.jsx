@@ -3,32 +3,30 @@ import { ShipWheelIcon, ShirtIcon } from "lucide-react";
 import { Link } from "react-router";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { signup } from "../lib/api";
-
+import useSignup from "../hook/useSignup";
 
 const SignupPage = () => {
-  
-  const [signupData,setSignupData] = useState({
-    fullName:"",
-    email:"",
-    password:"",
-  })
-  
-  const queryClient = useQueryClient();
+  const [capsLock, setCapsLock] = useState(false);
 
-  const {mutate:signupMutation, isPending,error} = useMutation({
-    mutationFn:signup,
-    onSuccess:()=> queryClient.invalidateQueries({queryKey:["authUser"]})
-  })
-  
+  const handleKeyUp = (e) => {
+    setCapsLock(e.getModifierState("CapsLock"));
+  };
+  const [signupData, setSignupData] = useState({
+    fullName: "",
+    email: "",
+    password: "",
+  });
+
+  const { signupMutation, isPending, error } = useSignup();
   const handleSignup = (e) => {
     e.preventDefault();
-    signupMutation(signupData)
-  }
+    signupMutation(signupData);
+  };
 
   return (
     <div
-    className="h-screen flex items-center justify-center p-4 sm:p-6 md:p-8"
-    data-theme="forest"
+      className="h-screen flex items-center justify-center p-4 sm:p-6 md:p-8"
+      data-theme="forest"
     >
       <div
         className="border border-primary/25 flex flex-col lg:flex-row w-full max-w-5xl mx-auto bg-base-100
@@ -37,7 +35,7 @@ const SignupPage = () => {
         {/* Signup Form - Left Side */}
         <div className="w-full lg:w-1/2 p-4 sm:p-8 flex flex-col">
           <div className="mb-4 flex items-center justify-start gap-2">
-            <ShipWheelIcon className="size-6 text-primary"/>
+            <ShipWheelIcon className="size-6 text-primary" />
             <span className="text-3xl font-bold font-mono bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary tracking-wider">
               Streamify
             </span>
@@ -47,14 +45,15 @@ const SignupPage = () => {
             <div className="alert alert-error mb-4">
               <span>{error.response?.data?.message}</span>
             </div>
-            )
-          }
+          )}
           <div className="w-full">
             <form onSubmit={handleSignup}>
               <div className="space-y-4">
                 <div>
                   <h2 className="text-xl font-semibold">Create an Account</h2>
-                  <p>Join Streamify and start your language learning adventire!</p>
+                  <p>
+                    Join Streamify and start your language learning adventire!
+                  </p>
                 </div>
 
                 <div className="space-y-3">
@@ -62,45 +61,73 @@ const SignupPage = () => {
                     <label className="label">
                       <span className="label-text">Full Name</span>
                     </label>
-                    <input type="text"
-                    placeholder="Michel Stark"
-                    className="input input-bordered w-full"
-                    value={signupData.fullName} 
-                    onChange={(e)=>{setSignupData({...signupData,fullName:e.target.value})}}
-                    required/>
+                    <input
+                      type="text"
+                      placeholder="Michel Stark"
+                      className="input input-bordered w-full"
+                      value={signupData.fullName}
+                      onChange={(e) => {
+                        setSignupData({
+                          ...signupData,
+                          fullName: e.target.value,
+                        });
+                      }}
+                      required
+                    />
                   </div>
 
                   <div className="form-control w-full">
                     <label className="label">
                       <span className="label-text">Email</span>
                     </label>
-                    <input type="email"
-                    placeholder="michelstark@example.com"
-                    className="input input-bordered w-full"
-                    value={signupData.email} 
-                    onChange={(e)=>{setSignupData({...signupData,email:e.target.value})}}
-                    required/>
+                    <input
+                      type="email"
+                      placeholder="michelstark@example.com"
+                      className="input input-bordered w-full"
+                      value={signupData.email}
+                      onChange={(e) => {
+                        setSignupData({ ...signupData, email: e.target.value });
+                      }}
+                      required
+                    />
                   </div>
 
                   <div className="form-control w-full">
                     <label className="label">
                       <span className="label-text">Password</span>
+                      {capsLock ? (
+                        <span className="text-red-500 text-xs">
+                          Caps Lock is on
+                        </span>
+                      ) : (
+                        ""
+                      )}
                     </label>
-                    <input type="password"
-                    placeholder="********"
-                    className="input input-bordered w-full"
-                    value={signupData.password} 
-                    onChange={(e)=>{setSignupData({...signupData,password:e.target.value})}}
-                    required/>
+                    <input
+                      type="password"
+                      placeholder="********"
+                      className="input input-bordered w-full"
+                      onKeyUp={handleKeyUp}
+                      value={signupData.password}
+                      onChange={(e) => {
+                        setSignupData({
+                          ...signupData,
+                          password: e.target.value,
+                        });
+                      }}
+                      required
+                    />
                   </div>
                 </div>
                 <button className="btn btn-primary w-full" type="submit">
                   {isPending ? (
                     <>
-                    <span className="loading loading-spinner loading-xs"></span>
-                    Loading...
+                      <span className="loading loading-spinner loading-xs"></span>
+                      Loading...
                     </>
-                  ) :("Create Account")}
+                  ) : (
+                    "Create Account"
+                  )}
                 </button>
 
                 <div className="mt-4">
@@ -113,7 +140,6 @@ const SignupPage = () => {
                 </div>
               </div>
             </form>
-
           </div>
         </div>
 
@@ -135,13 +161,12 @@ const SignupPage = () => {
                 Connect with language partners worldwide
               </h2>
               <p className="opacity-70">
-                Practice conversations, make friends, and improve your language skills together
+                Practice conversations, make friends, and improve your language
+                skills together
               </p>
             </div>
           </div>
         </div>
-
-
       </div>
     </div>
   );
