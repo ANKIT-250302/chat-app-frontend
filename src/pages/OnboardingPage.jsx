@@ -4,7 +4,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast, { LoaderIcon } from "react-hot-toast";
 import { completeOnboarding } from "../lib/api";
 import { CameraIcon, Loader2Icon, MapPinIcon, ShipWheelIcon, ShuffleIcon } from "lucide-react";
-import { LANGUAGES } from "../../../backend/src/constants/constants";
+import { LANGUAGES } from "../constants/constants"
 
 const OnboardingPage = () => {
   const { authUser } = useAuthUser();
@@ -96,7 +96,7 @@ const OnboardingPage = () => {
 
             <div className="form-control">
               <label className="label">
-                <span className="label-text">Full Name</span>
+                <span className="label-text">Bio</span>
               </label>
               <textarea
                 name="bio"
