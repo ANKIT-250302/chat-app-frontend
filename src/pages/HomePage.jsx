@@ -3,14 +3,15 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import {
   getOutgoingReqs,
+  getRecommendedUser,
   getUserFriends,
-  getUsers,
   sendFriendRequest,
 } from "../lib/api";
 import { Link } from "react-router";
 import { CheckCircleIcon, MapPinIcon, UserPlusIcon, UsersIcon } from "lucide-react";
 import FriendsCard, { getLanguageFlag } from "../components/FriendsCard";
 import NoFriendFound from "../components/NoFriendFound";
+import { capitalize } from "../lib/utils";
 
 const HomePage = () => {
   const [outgoingRequestsIds, setOutgoingRequestsIds] = useState(new Set());
@@ -21,7 +22,7 @@ const HomePage = () => {
   });
   const { data: recommendedUsers = [], isLoading: loadingUsers } = useQuery({
     queryKey: ["recommendedUsers"],
-    queryFn: getUsers,
+    queryFn: getRecommendedUser,
   });
   const { data: outgoingFriendReqs = [] } = useQuery({
     queryKey: ["outgoingFriendReqs"],
@@ -38,7 +39,7 @@ const HomePage = () => {
     const outgoingIds = new Set();
     if (outgoingFriendReqs && outgoingFriendReqs.length > 0) {
       outgoingFriendReqs.forEach((req) => {
-        outgoingIds.add(req.id);
+        outgoingIds.add(req.recipient._id);
       });
       setOutgoingRequestsIds(outgoingIds);
     }
@@ -164,4 +165,3 @@ const HomePage = () => {
 
 export default HomePage;
 
-const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1);
