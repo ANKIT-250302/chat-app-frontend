@@ -1,7 +1,7 @@
 import React from "react";
 import { LANGUAGE_TO_FLAG } from "../constants/constants";
 import { Link } from "react-router";
-const FriendsCard = () => {
+const FriendsCard = ({friend}) => {
   return (
     <div className="card bg-base-200 hover:shadow-md transition-shadow">
       <div className="card-body p-4">

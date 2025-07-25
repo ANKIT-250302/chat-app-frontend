@@ -7,23 +7,23 @@ const LoginPage = () => {
   const [capsLock, setCapsLock] = useState(false);
 
   const handleKeyUp = (e) => {
-    setCapsLock(e.getModifierState('CapsLock'));
+    setCapsLock(e.getModifierState("CapsLock"));
   };
   const [loginData, setLoginData] = useState({
     email: "",
     password: "",
   });
 
-  const {loginMutation,isPending,error}=useLogin()
-  const handleLogin = (e)=>{
-    e.preventDefault()
-    loginMutation(loginData)
-  }
+  const { loginMutation, isPending, error } = useLogin();
+  const handleLogin = (e) => {
+    e.preventDefault();
+    loginMutation(loginData);
+  };
 
   return (
     <div
-    className="h-screen flex items-center justify-center p-4 sm:p-6 md:p-8"
-    data-theme="forest"
+      className="h-screen flex items-center justify-center p-4 sm:p-6 md:p-8"
+      data-theme="forest"
     >
       <div
         className="border border-primary/25 flex flex-col lg:flex-row w-full max-w-5xl mx-auto bg-base-100
@@ -32,7 +32,7 @@ const LoginPage = () => {
         {/* Signup Form - Left Side */}
         <div className="w-full lg:w-1/2 p-4 sm:p-8 flex flex-col">
           <div className="mb-4 flex items-center justify-start gap-2">
-            <ShipWheelIcon className="size-6 text-primary"/>
+            <ShipWheelIcon className="size-6 text-primary" />
             <span className="text-3xl font-bold font-mono bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary tracking-wider">
               Streamify
             </span>
@@ -42,8 +42,7 @@ const LoginPage = () => {
             <div className="alert alert-error mb-4">
               <span>{error.response?.data?.message}</span>
             </div>
-            )
-          }
+          )}
           <div className="w-full">
             <form onSubmit={handleLogin}>
               <div className="space-y-4">
@@ -53,40 +52,58 @@ const LoginPage = () => {
                 </div>
 
                 <div className="space-y-3">
-
                   <div className="form-control w-full">
                     <label className="label">
                       <span className="label-text">Email</span>
                     </label>
-                    <input type="email"
-                    placeholder="michelstark@example.com"
-                    className="input input-bordered w-full"
-                    value={loginData.email} 
-                    onChange={(e)=>{setLoginData({...loginData,email:e.target.value})}}
-                    required/>
+                    <input
+                      type="email"
+                      placeholder="michelstark@example.com"
+                      className="input input-bordered w-full"
+                      value={loginData.email}
+                      onChange={(e) => {
+                        setLoginData({ ...loginData, email: e.target.value });
+                      }}
+                      required
+                    />
                   </div>
 
                   <div className="form-control w-full">
                     <label className="label">
                       <span className="label-text">Password</span>
-                      {capsLock? <span className="text-red-500 text-xs">Caps Lock is on</span>:""}
+                      {capsLock ? (
+                        <span className="text-red-500 text-xs">
+                          Caps Lock is on
+                        </span>
+                      ) : (
+                        ""
+                      )}
                     </label>
-                    <input type="password"
-                    placeholder="********"
-                    className="input input-bordered w-full"
-                    onKeyUp={handleKeyUp}
-                    value={loginData.password} 
-                    onChange={(e)=>{setLoginData({...loginData,password:e.target.value})}}
-                    required/>
+                    <input
+                      type="password"
+                      placeholder="********"
+                      className="input input-bordered w-full"
+                      onKeyUp={handleKeyUp}
+                      value={loginData.password}
+                      onChange={(e) => {
+                        setLoginData({
+                          ...loginData,
+                          password: e.target.value,
+                        });
+                      }}
+                      required
+                    />
                   </div>
                 </div>
                 <button className="btn btn-primary w-full" type="submit">
                   {isPending ? (
                     <>
-                    <span className="loading loading-spinner loading-xs"></span>
-                    Loading...
+                      <span className="loading loading-spinner loading-xs"></span>
+                      Loading...
                     </>
-                  ) :("Login")}
+                  ) : (
+                    "Login"
+                  )}
                 </button>
 
                 <div className="mt-4">
@@ -99,7 +116,6 @@ const LoginPage = () => {
                 </div>
               </div>
             </form>
-
           </div>
         </div>
 
@@ -121,13 +137,12 @@ const LoginPage = () => {
                 Connect with language partners worldwide
               </h2>
               <p className="opacity-70">
-                Practice conversations, make friends, and improve your language skills together
+                Practice conversations, make friends, and improve your language
+                skills together
               </p>
             </div>
           </div>
         </div>
-
-
       </div>
     </div>
   );

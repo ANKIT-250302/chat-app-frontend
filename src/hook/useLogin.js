@@ -20,7 +20,9 @@ const {
     onError: () => {
       toast.error(error.response.data.message);
     },
+    
   });
+  console.log("error:",error)
   return {loginMutation:mutate,isPending,error}
   
 
